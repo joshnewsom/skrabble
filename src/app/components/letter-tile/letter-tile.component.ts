@@ -1,6 +1,15 @@
 import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
+import { DragService } from 'src/app/services/drag/drag.service';
+
 import { values } from 'src/app/constants';
+
+interface TileStyle {
+  position?: string;
+  'left.px'?: number;
+  'top.px'?: number;
+  zIndex?: number;
+}
 
 @Component({
   selector: 'sk-letter-tile',
@@ -13,10 +22,12 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
 
   @ViewChild('tile', { static: true }) tile: ElementRef;
 
+  public style: TileStyle = { };
   public value: number;
-  public displayLetter: string;
 
-  constructor() { }
+  constructor(
+    private dragService: DragService
+  ) { }
 
   ngOnInit(): void {
     if (this.letter === '_') {
@@ -33,6 +44,10 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
     const y = Math.floor(Math.random() * 100);
 
     this.tile.nativeElement.style.backgroundPosition = `${x}% ${y}%`;
+  }
+
+  onMousedown(event: MouseEvent) {
+    this.dragService.startDragging(this, event);
   }
 
 }

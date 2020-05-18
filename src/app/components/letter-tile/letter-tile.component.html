@@ -1,4 +1,5 @@
-<div class="sk-letter-tile" #tile>
+<div #tile class="sk-letter-tile" [ngStyle]="style"
+  (mousedown)="onMousedown($event)">
 
   <div class="letter-char">
     {{ letter }}

@@ -12,7 +12,6 @@ export class TileRackComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log('this.letters:', this.letters);
   }
 
 }

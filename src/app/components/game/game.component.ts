@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { LettersService } from 'src/app/services/letters/letters.service';
 
+import { LetterSack } from 'src/app/classes/letter-sack';
+
 @Component({
   selector: 'sk-game',
   templateUrl: './game.component.html',
@@ -9,7 +11,7 @@ import { LettersService } from 'src/app/services/letters/letters.service';
 })
 export class GameComponent implements OnInit {
 
-  public letterSack: any;
+  public letterSack: LetterSack;
   public testLetters: any;
 
   constructor(
@@ -19,8 +21,9 @@ export class GameComponent implements OnInit {
   ngOnInit(): void {
     const letters = this.lettersService.getAllLetters();
     this.lettersService.shuffle(letters);
+    this.letterSack = new LetterSack(letters);
 
-    const testLetters = letters.slice(0, 7);
+    const testLetters = this.letterSack.draw(7);
 
     this.testLetters = testLetters;
   }
