@@ -1,29 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LetterTileComponent } from './letter-tile.component';
+import { GameComponent } from './game.component';
 
-describe('LetterTileComponent', () => {
-  let component: LetterTileComponent;
-  let fixture: ComponentFixture<LetterTileComponent>;
+describe('GameComponent', () => {
+  let component: GameComponent;
+  let fixture: ComponentFixture<GameComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LetterTileComponent ]
+      declarations: [ GameComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LetterTileComponent);
+    fixture = TestBed.createComponent(GameComponent);
     component = fixture.componentInstance;
-
-    component.letter = 'A';
-
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    component.letter = 'A';
     expect(component).toBeTruthy();
   });
 });

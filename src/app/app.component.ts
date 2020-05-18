@@ -1,6 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
-
-import { LettersService } from 'src/app/services/letters/letters.service';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'sk-root',
@@ -9,13 +7,5 @@ import { LettersService } from 'src/app/services/letters/letters.service';
 })
 export class AppComponent {
 
-  constructor(private LettersService: LettersService) { }
-  title = 'skrabble';
-
-  letters: any;
-
-  ngOnInit() {
-    this.letters = this.LettersService.getAllLetters();
-    this.LettersService.shuffle(this.letters);
-  }
+  constructor() { }
 }

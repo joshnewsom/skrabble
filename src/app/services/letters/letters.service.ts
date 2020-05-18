@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { Letter } from 'src/app/classes/letter';
-
 import { counts } from 'src/app/constants';
 
 @Injectable({
@@ -14,10 +12,10 @@ export class LettersService {
   getAllLetters() {
     const letters = [ ];
 
-    for (const char in counts) {
-      if (counts.hasOwnProperty(char)) {
-        for (let i = 0; i < counts[char]; i++) {
-          letters.push(new Letter(char));
+    for (const letter in counts) {
+      if (counts.hasOwnProperty(letter)) {
+        for (let i = 0; i < counts[letter]; i++) {
+          letters.push(letter);
         }
       }
     }
@@ -25,7 +23,7 @@ export class LettersService {
     return letters;
   }
 
-  shuffle(letters: Letter[]): Letter[] {
+  shuffle(letters: string[]): string[] {
     const temp = letters.slice();
 
     letters.length = 0;

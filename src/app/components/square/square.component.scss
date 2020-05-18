@@ -1,0 +1,30 @@
+.game-square {
+  border: 2px solid white;
+  box-sizing: border-box;
+  height: 50px;
+  width: 50px;
+
+  &.double-letter {
+    background-color: #AFCCC8;
+  }
+
+  &.triple-letter {
+    background-color: #34829D;
+  }
+
+  &.double-word {
+    background-color: #F0A896;
+  }
+
+  &.triple-word {
+    background-color: #E44C38;
+  }
+
+  .game-square-text {
+    font-size: 13px;
+    height: 46px;
+    text-align: center;
+    width: 46px;
+  }
+
+}

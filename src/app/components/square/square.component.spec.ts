@@ -1,29 +1,25 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { LetterTileComponent } from './letter-tile.component';
+import { SquareComponent } from './square.component';
 
-describe('LetterTileComponent', () => {
-  let component: LetterTileComponent;
-  let fixture: ComponentFixture<LetterTileComponent>;
+describe('SquareComponent', () => {
+  let component: SquareComponent;
+  let fixture: ComponentFixture<SquareComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ LetterTileComponent ]
+      declarations: [ SquareComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(LetterTileComponent);
+    fixture = TestBed.createComponent(SquareComponent);
     component = fixture.componentInstance;
-
-    component.letter = 'A';
-
     fixture.detectChanges();
   });
 
   it('should create', () => {
-    component.letter = 'A';
     expect(component).toBeTruthy();
   });
 });

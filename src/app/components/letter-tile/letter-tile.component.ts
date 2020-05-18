@@ -1,36 +1,38 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 
-import { Letter } from 'src/app/classes/letter';
+import { values } from 'src/app/constants';
 
 @Component({
   selector: 'sk-letter-tile',
   templateUrl: './letter-tile.component.html',
   styleUrls: ['./letter-tile.component.scss']
 })
-export class LetterTileComponent implements OnInit {
+export class LetterTileComponent implements AfterViewInit, OnInit {
 
-  @Input() letter: Letter;
+  @Input() letter: string;
 
   @ViewChild('tile', { static: true }) tile: ElementRef;
 
+  public value: number;
   public displayLetter: string;
 
   constructor() { }
 
   ngOnInit(): void {
-    if (this.letter.char === '_') {
-      // JTN don't display anything for blank tiles
-      this.displayLetter = ' ';
+    if (this.letter === '_') {
+      this.letter = '';
+      this.value = 0;
     } else {
-      this.displayLetter = this.letter.char.toUpperCase();
+      this.letter = this.letter.toUpperCase();
+      this.value = values[this.letter];
     }
-
   }
 
   ngAfterViewInit() {
-    let x = Math.floor(Math.random() * 100),
-      y = Math.floor(Math.random() * 100);
-    this.tile.nativeElement.style.backgroundPosition = `${x}% ${y}%`
+    const x = Math.floor(Math.random() * 100);
+    const y = Math.floor(Math.random() * 100);
+
+    this.tile.nativeElement.style.backgroundPosition = `${x}% ${y}%`;
   }
 
 }
