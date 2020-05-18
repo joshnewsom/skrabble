@@ -1,0 +1,22 @@
+.sk-letter-tile {
+  align-items: center;
+  background-image: url("src/assets/wood.png");
+  background-size: auto;
+  border: 1px solid black;
+  display: flex;
+  justify-content: center;
+  height: 50px;
+  position: relative;
+  width: 50px;
+
+  .letter-char {
+    font-size: 2em;
+  }
+
+  .letter-score {
+    bottom: 3px;
+    font-size: 0.8em;
+    position: absolute;
+    right: 3px;
+  }
+}
