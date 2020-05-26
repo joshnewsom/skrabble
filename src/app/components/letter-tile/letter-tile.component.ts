@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewRef } from '@angular/core';
 
 import { DragService } from 'src/app/services/drag/drag.service';
 
@@ -6,7 +6,9 @@ import { values } from 'src/app/constants';
 
 interface TileStyle {
   position?: string;
+  boxShadow?: string;
   'left.px'?: number;
+  pointerEvents?: string;
   'top.px'?: number;
   zIndex?: number;
 }
@@ -24,6 +26,7 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
 
   public style: TileStyle = { };
   public value: number;
+  public viewRef: ViewRef;
 
   constructor(
     private dragService: DragService

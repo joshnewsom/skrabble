@@ -1,3 +1,5 @@
+@import 'src/app/variables';
+
 .sk-letter-tile {
   align-items: center;
   background-image: url("src/assets/wood.png");
@@ -5,9 +7,9 @@
   border: 1px solid black;
   display: flex;
   justify-content: center;
-  height: 50px;
+  height: $tile-size;
   position: relative;
-  width: 50px;
+  width: $tile-size;
 
   .letter-char {
     font-size: 2em;

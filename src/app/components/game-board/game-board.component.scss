@@ -1,10 +1,12 @@
+@import 'src/app/variables';
+
 .game-board {
 
   background-color: #C2B896;
   border: 2px solid black;
   box-sizing: border-box;
-  height: 50px * 15 + 4;
-  width: 50px * 15 + 4;
+  height: $square-size * 15 + 4;
+  width: $square-size * 15 + 4;
 
   .game-board-row {
     display: flex;

@@ -1,5 +1,9 @@
 import { Component, Input, OnInit } from '@angular/core';
 
+import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
+
+import { DragService } from 'src/app/services/drag/drag.service';
+
 @Component({
   selector: 'sk-square',
   templateUrl: './square.component.html',
@@ -13,7 +17,9 @@ export class SquareComponent implements OnInit {
   public multiplierClass?: string;
   public textContent?: string;
 
-  constructor() { }
+  constructor(
+    private dragService: DragService
+  ) { }
 
   ngOnInit(): void {
     if (this.multiplier) {

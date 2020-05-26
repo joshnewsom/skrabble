@@ -8,6 +8,8 @@ import { GameBoardComponent } from './components/game-board/game-board.component
 import { SquareComponent } from './components/square/square.component';
 import { TileRackComponent } from './components/tile-rack/tile-rack.component';
 import { GameComponent } from './components/game/game.component';
+import { LetterTileInsertionPointDirective } from './directives/letter-tile-insertion-point.directive';
+import { TileDropZoneDirective } from './directives/tile-drop-zone.directive';
 
 @NgModule({
   declarations: [
@@ -16,7 +18,9 @@ import { GameComponent } from './components/game/game.component';
     GameBoardComponent,
     SquareComponent,
     TileRackComponent,
-    GameComponent
+    GameComponent,
+    LetterTileInsertionPointDirective,
+    TileDropZoneDirective
   ],
   imports: [
     BrowserModule,

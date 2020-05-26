@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ComponentFactoryResolver, OnInit, ViewChild } from '@angular/core';
 
 import { LettersService } from 'src/app/services/letters/letters.service';
+
+import { TileRackComponent } from 'src/app/components/tile-rack/tile-rack.component';
 
 import { LetterSack } from 'src/app/classes/letter-sack';
 
@@ -10,6 +12,8 @@ import { LetterSack } from 'src/app/classes/letter-sack';
   styleUrls: ['./game.component.scss']
 })
 export class GameComponent implements OnInit {
+
+  @ViewChild(TileRackComponent) letterRack;
 
   public letterSack: LetterSack;
   public testLetters: any;
@@ -24,7 +28,6 @@ export class GameComponent implements OnInit {
     this.letterSack = new LetterSack(letters);
 
     const testLetters = this.letterSack.draw(7);
-
     this.testLetters = testLetters;
   }
 

@@ -1,8 +1,11 @@
+@import 'src/app/variables';
+
 .game-square {
-  border: 2px solid white;
+  border: $square-border-width solid white;
   box-sizing: border-box;
-  height: 50px;
-  width: 50px;
+  height: $square-size;
+  position: relative;
+  width: $square-size;
 
   &.double-letter {
     background-color: #AFCCC8;
@@ -20,11 +23,29 @@
     background-color: #E44C38;
   }
 
+  &:hover {
+    border: 2px solid blue;
+  }
+
   .game-square-text {
     font-size: 13px;
-    height: 46px;
+    height: $tile-size;
+    line-height: $tile-size / 3;
     text-align: center;
-    width: 46px;
+    width: $tile-size;
+  }
+
+  .center-star-svg {
+    height: $tile-size;
+    width: $tile-size;
+  }
+
+  .interceptor {
+    height: 100%;
+    left: -1px;
+    position: absolute;
+    top: -1px;
+    width: 100%;
   }
 
 }

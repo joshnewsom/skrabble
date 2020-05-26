@@ -6,7 +6,11 @@
   </div>
 
   <div *ngIf="center">
-    <img src="assets/star.svg" height="46" width="46" alt="">
+    <img src="assets/star.svg" alt="" class="center-star-svg">
+  </div>
+
+  <div #interceptor skTileDropZone class="interceptor">
+    <ng-template skLetterTileInsertionPoint></ng-template>
   </div>
 
 </div>
