@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { ScoreService } from 'src/app/services/score.service';
+
 import { GameBoardComponent } from 'src/app/components/game-board/game-board.component';
 import { SquareComponent } from 'src/app/components/square/square.component';
 
@@ -10,7 +12,9 @@ import { SkrabbleMove } from 'src/app/classes/skrabble-move';
 })
 export class MovesService {
 
-  constructor() { }
+  constructor(
+    private scoreService: ScoreService
+  ) { }
 
   analyzeMove(move: SkrabbleMove, board: GameBoardComponent): SkrabbleMove {
     if (this.isRowMove(move.squares)) {
@@ -57,6 +61,10 @@ export class MovesService {
 
     }
 
+    if (!move.invalid) {
+      move.score = this.scoreService.getScore(move.squares);
+    }
+
     return move;
   }
 
@@ -70,6 +78,7 @@ export class MovesService {
     }
     return true;
   }
+
 
   isColumnMove(squares: SquareComponent[]) {
     let column = squares[0].column;

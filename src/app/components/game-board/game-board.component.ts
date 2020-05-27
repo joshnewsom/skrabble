@@ -33,9 +33,8 @@ export class GameBoardComponent implements OnInit {
         let _squares = this.squares.filter((item) => item.tile !== undefined);
 
         const move = new SkrabbleMove(_squares);
-        console.time('analyze')
         this.movesService.analyzeMove(move, this);
-        console.timeEnd('analyze')
+        
         console.log('move:', move);
 
         if (move.invalid) {
