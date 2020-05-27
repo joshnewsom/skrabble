@@ -1,8 +1,8 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 
 import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 
-import { DragService } from 'src/app/services/drag/drag.service';
+import { TileDropZoneDirective } from 'src/app/directives/tile-drop-zone.directive';
 
 @Component({
   selector: 'sk-square',
@@ -13,13 +13,20 @@ export class SquareComponent implements OnInit {
 
   @Input() center?: boolean;
   @Input() multiplier?: string;
+  @Input() row?: number;
+  @Input() column?: number;
 
+  @Output() onTileAdded = new EventEmitter<LetterTileComponent>();
+  @Output() onTileRemoved = new EventEmitter<LetterTileComponent>();
+
+  @ViewChild(TileDropZoneDirective) public dropZone: TileDropZoneDirective;
+
+  public locked?: boolean = false;
   public multiplierClass?: string;
   public textContent?: string;
+  public tile?: LetterTileComponent;
 
-  constructor(
-    private dragService: DragService
-  ) { }
+  constructor() { }
 
   ngOnInit(): void {
     if (this.multiplier) {
@@ -44,6 +51,12 @@ export class SquareComponent implements OnInit {
           break;
       }
     }
+  }
+
+  onDrop(tile: LetterTileComponent) {
+    this.tile = tile;
+    tile.square = this;
+    this.onTileAdded.emit(this.tile);
   }
 
 }

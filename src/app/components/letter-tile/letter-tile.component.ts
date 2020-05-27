@@ -1,6 +1,18 @@
-import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild, ViewRef } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild,
+  ViewRef
+} from '@angular/core';
 
 import { DragService } from 'src/app/services/drag/drag.service';
+
+import { SquareComponent } from 'src/app/components/square/square.component';
 
 import { values } from 'src/app/constants';
 
@@ -22,9 +34,12 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
 
   @Input() letter: string;
 
+  @Output() onPickUp = new EventEmitter<LetterTileComponent>();
+
   @ViewChild('tile', { static: true }) tile: ElementRef;
 
   public style: TileStyle = { };
+  public square?: SquareComponent;
   public value: number;
   public viewRef: ViewRef;
 
@@ -51,6 +66,10 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
 
   onMousedown(event: MouseEvent) {
     this.dragService.startDragging(this, event);
+
+    if (this.onPickUp) {
+      this.onPickUp.emit(this);
+    }
   }
 
 }

@@ -9,7 +9,7 @@
     <img src="assets/star.svg" alt="" class="center-star-svg">
   </div>
 
-  <div #interceptor skTileDropZone class="interceptor">
+  <div #interceptor skTileDropZone (onDrop)="onDrop($event)" class="interceptor">
     <ng-template skLetterTileInsertionPoint></ng-template>
   </div>
 

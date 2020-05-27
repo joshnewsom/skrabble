@@ -4,14 +4,15 @@ import { Subject } from 'rxjs';
 
 import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 
+import { DropEvent } from 'src/app/services/drag/drop-event.interface';
+
 @Injectable({
   providedIn: 'root'
 })
 export class DragService {
 
   public letterTile: LetterTileComponent;
-  public onDropTile = new Subject<{ element: HTMLElement, letterTile: LetterTileComponent }>();
-  public onDropTile2 = new Subject<LetterTileComponent>();
+  public onDropTile = new Subject<DropEvent>();
 
   private boundOnDrag: (event: MouseEvent) => void;
   private boundOnMouseup: (event: MouseEvent) => void;
@@ -24,6 +25,12 @@ export class DragService {
   }
 
   public startDragging(letterTile: LetterTileComponent, event: MouseEvent) {
+
+    if (letterTile.square) {
+      letterTile.square.tile = undefined;
+    }
+
+    letterTile.square = undefined;
 
     const boundingRect = letterTile.tile.nativeElement.getBoundingClientRect();
     this.xOffset = event.clientX - boundingRect.left;
