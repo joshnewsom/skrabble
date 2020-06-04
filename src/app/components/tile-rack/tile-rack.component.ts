@@ -45,6 +45,23 @@ export class TileRackComponent implements AfterViewInit {
     });
   }
 
+  draw() {
+    const need = 7 - this.tiles.length;
+    const remaining = this.letterSack.letters.length;
+    const drawNum = need >= remaining ? remaining : need;
+    const newLetters = this.letterSack.draw(drawNum);
+    const emptyZones = this.dropZones.filter(zone => !zone.tile);
+
+    emptyZones.forEach(zone => {
+      const letter = newLetters.pop();
+      const newComponent = zone.insertionPoint.createComponent(this.letterTileFactory);
+      newComponent.instance.letter = letter;
+      newComponent.instance.viewRef = newComponent.hostView;
+      zone.tile = newComponent.instance;
+      this.tiles.push(newComponent.instance);
+    });
+  }
+
   onPickUpTile(letterTile: LetterTileComponent) {
     let index = this.tiles.indexOf(letterTile);
     if (index >= 0) {

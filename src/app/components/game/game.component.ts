@@ -67,7 +67,7 @@ export class GameComponent implements OnInit {
 
       this.potentialMove = undefined;
 
-      console.log('this.tileRack:', this.tileRack);
+      this.tileRack.draw();
     }
   }
 

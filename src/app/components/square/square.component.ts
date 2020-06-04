@@ -55,7 +55,6 @@ export class SquareComponent implements OnInit {
 
   onDropTile(tile: LetterTileComponent) {
     this.tile = tile;
-    // tile.square = this;
     // this.onTileAdded.emit(this.tile);
   }
 
