@@ -1,15 +1,6 @@
-import { Component, OnInit, QueryList, ViewChildren} from '@angular/core';
+import { Component, OnInit, QueryList, ViewChildren } from '@angular/core';
 
-import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 import { SquareComponent } from 'src/app/components/square/square.component';
-
-import { DragService } from 'src/app/services/drag/drag.service';
-import { MovesService } from 'src/app/services/moves/moves.service';
-import { ScoreService } from 'src/app/services/score.service';
-
-import { SkrabbleMove } from 'src/app/classes/skrabble-move';
-
-import { DropEvent } from 'src/app/services/drag/drop-event.interface';
 
 
 @Component({
@@ -21,29 +12,9 @@ export class GameBoardComponent implements OnInit {
 
   @ViewChildren(SquareComponent) squares: QueryList<SquareComponent>;
 
-  constructor(
-    private dragService: DragService,
-    private movesService: MovesService,
-    private scoreService: ScoreService
-  ) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    this.dragService.onDropTile.subscribe((event: DropEvent) => {
-      setTimeout(() => {
-        let _squares = this.squares.filter((item) => item.tile !== undefined);
-
-        const move = new SkrabbleMove(_squares);
-        this.movesService.analyzeMove(move, this);
-        
-        console.log('move:', move);
-
-        if (move.invalid) {
-          console.log('** INVALID MOVE **');
-        }
-      });
-    });
-
-  }
+  ngOnInit() { }
 
   ngAfterViewInit() {
     this.squares.forEach((sq, i) => {

@@ -1,6 +1,4 @@
-import { Directive, ContentChild, ElementRef, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
-
-import { LetterTileInsertionPointDirective } from 'src/app/directives/letter-tile-insertion-point.directive';
+import { Directive, ContentChild, ElementRef, EventEmitter, OnInit, Output, ViewContainerRef } from '@angular/core';
 
 import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 
@@ -13,9 +11,12 @@ import { DropEvent } from 'src/app/services/drag/drop-event.interface';
 })
 export class TileDropZoneDirective implements OnInit {
 
-  @ContentChild(LetterTileInsertionPointDirective) insertionPoint: LetterTileInsertionPointDirective;
+  @ContentChild('insertionPoint', { read: ViewContainerRef }) insertionPoint: ViewContainerRef;
 
-  @Output() onDrop? = new EventEmitter<LetterTileComponent>();
+  @Output() onDrop = new EventEmitter<LetterTileComponent>();
+  @Output() onPickUp = new EventEmitter<LetterTileComponent>();
+
+  public tile?: LetterTileComponent;
 
   constructor(
     private dragService: DragService,
@@ -23,17 +24,27 @@ export class TileDropZoneDirective implements OnInit {
   ) { }
 
   ngOnInit() {
+    // subscribe to drop events
     this.dragService.onDropTile.subscribe((event: DropEvent) => {
       const { element, letterTile } = event;
 
       if (this.elementRef.nativeElement === element) {
-        this.insertionPoint.viewContainerRef.insert(letterTile.viewRef);
+        this.insert(letterTile);
+        this.onDrop.emit(letterTile);
+      }
+    });
 
-        if (this.onDrop) {
-          this.onDrop.emit(letterTile);
-        }
+    // subscribe to pick up events
+    this.dragService.onPickUpTile.subscribe((letterTile: LetterTileComponent) => {
+      if (letterTile === this.tile) {
+        this.onPickUp.emit(letterTile);
+        this.tile = undefined;
       }
     });
   }
 
+  insert(letterTile: LetterTileComponent) {
+    this.insertionPoint.insert(letterTile.viewRef);
+    this.tile = letterTile;
+  }
 }

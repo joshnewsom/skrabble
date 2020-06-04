@@ -16,8 +16,8 @@ export class SquareComponent implements OnInit {
   @Input() row?: number;
   @Input() column?: number;
 
-  @Output() onTileAdded = new EventEmitter<LetterTileComponent>();
-  @Output() onTileRemoved = new EventEmitter<LetterTileComponent>();
+  // @Output() onTileAdded = new EventEmitter<LetterTileComponent>();
+  // @Output() onTileRemoved = new EventEmitter<LetterTileComponent>();
 
   @ViewChild(TileDropZoneDirective) public dropZone: TileDropZoneDirective;
 
@@ -53,10 +53,14 @@ export class SquareComponent implements OnInit {
     }
   }
 
-  onDrop(tile: LetterTileComponent) {
+  onDropTile(tile: LetterTileComponent) {
     this.tile = tile;
-    tile.square = this;
-    this.onTileAdded.emit(this.tile);
+    // tile.square = this;
+    // this.onTileAdded.emit(this.tile);
+  }
+
+  onPickUpTile(tile: LetterTileComponent) {
+    this.tile = undefined;
   }
 
 }

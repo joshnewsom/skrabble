@@ -1,36 +1,59 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, Input, OnInit, QueryList, ViewChildren } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ComponentFactoryResolver,
+  Input,
+  QueryList,
+  ViewChildren
+} from '@angular/core';
 
 import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 
-import { LetterTileInsertionPointDirective } from 'src/app/directives/letter-tile-insertion-point.directive';
+import { TileDropZoneDirective } from 'src/app/directives/tile-drop-zone.directive';
+
+import { LetterSack } from 'src/app/classes/letter-sack';
 
 @Component({
   selector: 'sk-tile-rack',
   templateUrl: './tile-rack.component.html',
   styleUrls: ['./tile-rack.component.scss']
 })
-export class TileRackComponent implements AfterViewInit, OnInit {
+export class TileRackComponent implements AfterViewInit {
 
-  @Input() letters: string[];
+  @Input() letterSack: LetterSack;
 
-  @ViewChildren(LetterTileInsertionPointDirective) insertionPoints: QueryList<LetterTileInsertionPointDirective>;
+  @ViewChildren(TileDropZoneDirective) dropZones: QueryList<TileDropZoneDirective>;
 
   private letterTileFactory = this.componentFactoryResolver.resolveComponentFactory(LetterTileComponent);
+  public tiles: LetterTileComponent[] = [ ];
 
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver
   ) { }
 
-  ngOnInit() {
-
-  }
-
   ngAfterViewInit() {
-    this.letters.forEach((letter, i) => {
-      const newComponent = this.insertionPoints.find((item, index) => index === i).viewContainerRef.createComponent(this.letterTileFactory);
+    const letters = this.letterSack.draw(7);
+
+    const dropZones = this.dropZones.toArray();
+    letters.forEach((letter, i) => {
+      const newComponent = dropZones[i].insertionPoint.createComponent(this.letterTileFactory);
       newComponent.instance.letter = letter;
       newComponent.instance.viewRef = newComponent.hostView;
+      dropZones[i].tile = newComponent.instance;
+
+      this.tiles.push(newComponent.instance);
     });
+  }
+
+  onPickUpTile(letterTile: LetterTileComponent) {
+    let index = this.tiles.indexOf(letterTile);
+    if (index >= 0) {
+      this.tiles.splice(index, 1);
+    }
+  }
+
+  onDropTile(letterTile: LetterTileComponent) {
+    this.tiles.push(letterTile);
   }
 
 }

@@ -13,6 +13,7 @@ export class DragService {
 
   public letterTile: LetterTileComponent;
   public onDropTile = new Subject<DropEvent>();
+  public onPickUpTile = new Subject<LetterTileComponent>();
 
   private boundOnDrag: (event: MouseEvent) => void;
   private boundOnMouseup: (event: MouseEvent) => void;
@@ -26,11 +27,13 @@ export class DragService {
 
   public startDragging(letterTile: LetterTileComponent, event: MouseEvent) {
 
-    if (letterTile.square) {
-      letterTile.square.tile = undefined;
-    }
+    this.onPickUpTile.next(letterTile);
 
-    letterTile.square = undefined;
+    // if (letterTile.square) {
+    //   letterTile.square.tile = undefined;
+    // }
+    //
+    // letterTile.square = undefined;
 
     const boundingRect = letterTile.tile.nativeElement.getBoundingClientRect();
     this.xOffset = event.clientX - boundingRect.left;

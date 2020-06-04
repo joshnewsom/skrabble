@@ -2,7 +2,17 @@
 
   <sk-game-board></sk-game-board>
 
-  <sk-tile-rack [letters]="testLetters"></sk-tile-rack>
+  <sk-tile-rack [letterSack]="letterSack" style="display: inline-block;"></sk-tile-rack>
+
+  <div style="display: inline-block;">
+
+    <span>Score: {{ potentialMove?.score }}</span>
+
+    <button (click)="submitMove()" [disabled]="!potentialMove || potentialMove.invalid">Submit</button>
+
+    <span>Total: {{ totalScore }}</span>
+
+  </div>
 
 </div>
 
