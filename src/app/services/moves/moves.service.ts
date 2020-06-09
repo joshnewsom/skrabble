@@ -19,7 +19,6 @@ export class MovesService {
 
   analyzeMove(move: SkrabbleMove, board: GameBoardComponent): SkrabbleMove {
     const directionValid = this.validateDirection(move);
-    console.log('directionValid:', directionValid);
 
     if (!directionValid) {
       move.invalid = true;
@@ -27,7 +26,6 @@ export class MovesService {
     }
 
     // make sure squares are in order
-    console.time('sort');
     move.newSquares.sort((a, b) => {
       if (a.row === b.row) {
         return a.column - b.column;
@@ -35,7 +33,6 @@ export class MovesService {
         return a.row - b.row;
       }
     });
-    console.timeEnd('sort');
 
     move.words = this.getWords(move, board);
 
@@ -99,13 +96,12 @@ export class MovesService {
   }
 
   getWords(move: SkrabbleMove, board: GameBoardComponent) {
-    let words = [ ];
+    const words = [ ];
 
     let firstSquare: SquareComponent;
     let rowWord: SkrabbleWord;
     let columnWord: SkrabbleWord;
 
-    console.time('getWords');
     switch (move.direction) {
       case 'single':
         firstSquare = move.newSquares[0];
@@ -148,7 +144,6 @@ export class MovesService {
       default:
         throw new Error('invalid move direction');
     }
-    console.timeEnd('getWords');
 
     console.log('words:', words);
     return words;
@@ -159,10 +154,8 @@ export class MovesService {
   }
 
   validateDirection(move: SkrabbleMove) {
-    let newSquares = move.newSquares;
-    console.time('validateDirection')
+    const newSquares = move.newSquares;
     if (newSquares.length === 1) {
-      console.timeEnd('validateDirection')
       move.direction = 'single';
       return true;
     }
@@ -189,13 +182,12 @@ export class MovesService {
       move.direction = 'column';
     }
 
-    console.timeEnd('validateDirection')
     return sameRow || sameColumn;
   }
 
 
   isRowMove(squares: SquareComponent[]) {
-    let row = squares[0].row;
+    const row = squares[0].row;
     for (let i = 1; i < squares.length; i++) {
       if (squares[i].row !== row) {
         return false;
@@ -206,7 +198,7 @@ export class MovesService {
 
 
   isColumnMove(squares: SquareComponent[]) {
-    let column = squares[0].column;
+    const column = squares[0].column;
     for (let i = 1; i < squares.length; i++) {
       if (squares[i].column !== column) {
         return false;

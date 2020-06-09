@@ -13,8 +13,8 @@ export class TileDropZoneDirective implements OnInit {
 
   @ContentChild('insertionPoint', { read: ViewContainerRef }) insertionPoint: ViewContainerRef;
 
-  @Output() drop = new EventEmitter<LetterTileComponent>();
-  @Output() pickUp = new EventEmitter<LetterTileComponent>();
+  @Output() dropTile = new EventEmitter<LetterTileComponent>();
+  @Output() pickUpTile = new EventEmitter<LetterTileComponent>();
 
   public tile?: LetterTileComponent;
 
@@ -30,14 +30,14 @@ export class TileDropZoneDirective implements OnInit {
 
       if (this.elementRef.nativeElement === element) {
         this.insert(letterTile);
-        this.drop.emit(letterTile);
+        this.dropTile.emit(letterTile);
       }
     });
 
     // subscribe to pick up events
     this.dragService.onPickUpTile.subscribe((letterTile: LetterTileComponent) => {
       if (letterTile === this.tile) {
-        this.pickUp.emit(letterTile);
+        this.pickUpTile.emit(letterTile);
         this.tile = undefined;
       }
     });
