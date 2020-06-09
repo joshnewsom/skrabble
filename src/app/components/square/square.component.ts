@@ -21,7 +21,6 @@ export class SquareComponent implements OnInit {
 
   @ViewChild(TileDropZoneDirective) public dropZone: TileDropZoneDirective;
 
-  public locked?: boolean = false;
   public multiplierClass?: string;
   public textContent?: string;
   public tile?: LetterTileComponent;

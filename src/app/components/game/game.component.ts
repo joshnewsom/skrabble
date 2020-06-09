@@ -26,7 +26,7 @@ export class GameComponent implements OnInit {
   public letterSack: LetterSack;
   public testLetters: any;
   public potentialMove: SkrabbleMove;
-  public totalScore: number = 0;
+  public totalScore = 0;
 
   constructor(
     private dragService: DragService,
@@ -39,13 +39,13 @@ export class GameComponent implements OnInit {
 
     this.dragService.onDropTile.subscribe((event: DropEvent) => {
       setTimeout(() => {
-        let _squares = this.gameBoard.squares.filter(sq => sq.tile !== undefined && !sq.locked);
+        const squares = this.gameBoard.squares.filter(sq => sq.tile !== undefined && !sq.tile.locked);
 
-        if (!_squares.length) {
+        if (!squares.length) {
           return this.potentialMove = undefined;
         }
 
-        const move = new SkrabbleMove(_squares);
+        const move = new SkrabbleMove(squares);
         this.movesService.analyzeMove(move, this.gameBoard);
 
         this.potentialMove = move;
@@ -61,8 +61,8 @@ export class GameComponent implements OnInit {
     if (this.potentialMove && !this.potentialMove.invalid) {
       this.totalScore += this.potentialMove.score;
 
-      this.potentialMove.squares.forEach(sq => {
-        sq.locked = true;
+      this.potentialMove.newSquares.forEach(sq => {
+        sq.tile.locked = true;
       });
 
       this.potentialMove = undefined;

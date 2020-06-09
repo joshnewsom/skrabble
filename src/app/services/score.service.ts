@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 import { SquareComponent } from 'src/app/components/square/square.component';
 
 @Injectable({

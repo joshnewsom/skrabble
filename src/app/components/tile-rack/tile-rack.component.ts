@@ -63,7 +63,7 @@ export class TileRackComponent implements AfterViewInit {
   }
 
   onPickUpTile(letterTile: LetterTileComponent) {
-    let index = this.tiles.indexOf(letterTile);
+    const index = this.tiles.indexOf(letterTile);
     if (index >= 0) {
       this.tiles.splice(index, 1);
     }

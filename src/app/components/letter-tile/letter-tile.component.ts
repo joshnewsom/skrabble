@@ -34,10 +34,11 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
 
   @Input() letter: string;
 
-  @Output() onPickup = new EventEmitter<any>();
+  @Output() pickup = new EventEmitter<any>();
 
   @ViewChild('tile', { static: true }) tile: ElementRef;
 
+  public locked = false;
   public style: TileStyle = { };
   public square?: SquareComponent;
   public value: number;
@@ -65,13 +66,9 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
   }
 
   onMousedown(event: MouseEvent) {
-    if (this.square && this.square.locked) {
-      return;
+    if (!this.locked) {
+      this.dragService.startDragging(this, event);
+      this.pickup.emit();
     }
-
-    this.dragService.startDragging(this, event);
-
-    this.onPickup.emit();
   }
-
 }
