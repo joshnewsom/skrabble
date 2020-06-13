@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { ScoreService } from 'src/app/services/score.service';
-
 import { GameBoardComponent } from 'src/app/components/game-board/game-board.component';
 import { SquareComponent } from 'src/app/components/square/square.component';
 
@@ -13,9 +11,7 @@ import { SkrabbleWord } from 'src/app/classes/skrabble-word';
 })
 export class MovesService {
 
-  constructor(
-    private scoreService: ScoreService
-  ) { }
+  constructor( ) { }
 
   analyzeMove(move: SkrabbleMove, board: GameBoardComponent): SkrabbleMove {
     const directionValid = this.validateDirection(move);
@@ -34,16 +30,37 @@ export class MovesService {
       }
     });
 
+    const noGaps = this.validateNoGaps(move, board);
+
+    if (!noGaps) {
+      move.invalid = true;
+      return move;
+    }
+
+    // first move must use center square
+    if (move.isFirstMove) {
+      if (!this.validateCenter(move)) {
+        move.invalid = true;
+        return move;
+      }
+    }
+
     move.words = this.getWords(move, board);
 
-    console.log('move:', move);
-    console.log('move.words:', move.words);
+    // moves after the first must be connected to existing words
+    if (!move.isFirstMove) {
+      // all words should have .connected = true
+      const allWordsConnected = this.validateWordConnected(move);
+
+      if (!allWordsConnected) {
+        move.invalid = true;
+        return move;
+      }
+    }
 
     move.score = move.words.reduce((accumulator: number, word: SkrabbleWord) => {
       return accumulator + word.score;
     }, 0);
-
-    console.log('move.score:', move.score);
 
     return move;
   }
@@ -145,12 +162,29 @@ export class MovesService {
         throw new Error('invalid move direction');
     }
 
-    console.log('words:', words);
     return words;
   }
 
-  validateContinuity(newSquares: SquareComponent[], board: GameBoardComponent) {
+  validateNoGaps(move: SkrabbleMove, board: GameBoardComponent) {
+    if (move.direction === 'single') {
+      return true;
+    }
 
+    const first = move.newSquares[0];
+    const last = move.newSquares[move.newSquares.length - 1];
+    const start = move.direction === 'row' ? first.column : first.row;
+    const end = move.direction === 'row' ? last.column : last.row;
+
+    for (let i = start; i <= end; i++) {
+      const row = move.direction === 'row' ? first.row : i;
+      const column = move.direction === 'column' ? first.column : i;
+      const square = board.getSquare(row, column);
+      if (!square.tile) {
+        return false;
+      }
+    }
+
+    return true;
   }
 
   validateDirection(move: SkrabbleMove) {
@@ -185,26 +219,23 @@ export class MovesService {
     return sameRow || sameColumn;
   }
 
-
-  isRowMove(squares: SquareComponent[]) {
-    const row = squares[0].row;
-    for (let i = 1; i < squares.length; i++) {
-      if (squares[i].row !== row) {
-        return false;
+  validateCenter(move: SkrabbleMove) {
+    for (const sq of move.newSquares) {
+      if (sq.center) {
+        return true;
       }
     }
-    return true;
+    return false;
   }
 
 
-  isColumnMove(squares: SquareComponent[]) {
-    const column = squares[0].column;
-    for (let i = 1; i < squares.length; i++) {
-      if (squares[i].column !== column) {
-        return false;
+  // TODO: make this work for T-intersection words
+  validateWordConnected(move: SkrabbleMove) {
+    for (const word of move.words) {
+      if (word.connected) {
+        return true;
       }
     }
-    return true;
+    return false;
   }
-
 }

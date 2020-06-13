@@ -1,11 +1,14 @@
 import { SquareComponent } from 'src/app/components/square/square.component';
 
 export class SkrabbleWord {
+  public connected: boolean;
   public letters: string[] = [ ];
   public score: number;
 
   constructor(squares: SquareComponent[]) {
+    this.connected = false;
     this.score = 0;
+
     let wordMultiplier = 1;
 
     squares.forEach(sq => {
@@ -34,6 +37,8 @@ export class SkrabbleWord {
           default:
           break;
         }
+      } else {
+        this.connected = true;
       }
 
       this.score += value;

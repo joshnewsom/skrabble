@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 
 import { DragService } from 'src/app/services/drag/drag.service';
 import { GameService } from 'src/app/services/game/game.service';
@@ -18,7 +18,7 @@ import { DropEvent } from 'src/app/services/drag/drop-event.interface';
   styleUrls: ['./game.component.scss'],
   providers: [ GameService ]
 })
-export class GameComponent implements OnInit {
+export class GameComponent implements AfterViewInit, OnInit {
 
   @ViewChild(TileRackComponent) tileRack: TileRackComponent;
   @ViewChild(GameBoardComponent) gameBoard: GameBoardComponent;
@@ -27,6 +27,7 @@ export class GameComponent implements OnInit {
   public testLetters: any;
   public potentialMove: SkrabbleMove;
   public totalScore = 0;
+  public turns = 0;
 
   constructor(
     private dragService: DragService,
@@ -46,14 +47,25 @@ export class GameComponent implements OnInit {
         }
 
         const move = new SkrabbleMove(squares);
-        this.movesService.analyzeMove(move, this.gameBoard);
+        if (!this.turns) {
+          move.isFirstMove = true;
+        }
 
-        this.potentialMove = move;
+        this.movesService.analyzeMove(move, this.gameBoard);
 
         if (move.invalid) {
           console.log('** INVALID MOVE **');
         }
+
+        this.potentialMove = move;
+
       });
+    });
+  }
+
+  ngAfterViewInit() {
+    setTimeout(() => {
+      this.tileRack.draw();
     });
   }
 
@@ -66,6 +78,8 @@ export class GameComponent implements OnInit {
       });
 
       this.potentialMove = undefined;
+
+      this.turns++;
 
       this.tileRack.draw();
     }

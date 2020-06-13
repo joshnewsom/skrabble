@@ -1,5 +1,4 @@
 import {
-  AfterViewInit,
   Component,
   ComponentFactoryResolver,
   Input,
@@ -18,7 +17,7 @@ import { LetterSack } from 'src/app/classes/letter-sack';
   templateUrl: './tile-rack.component.html',
   styleUrls: ['./tile-rack.component.scss']
 })
-export class TileRackComponent implements AfterViewInit {
+export class TileRackComponent {
 
   @Input() letterSack: LetterSack;
 
@@ -30,20 +29,6 @@ export class TileRackComponent implements AfterViewInit {
   constructor(
     private componentFactoryResolver: ComponentFactoryResolver
   ) { }
-
-  ngAfterViewInit() {
-    const letters = this.letterSack.draw(7);
-
-    const dropZones = this.dropZones.toArray();
-    letters.forEach((letter, i) => {
-      const newComponent = dropZones[i].insertionPoint.createComponent(this.letterTileFactory);
-      newComponent.instance.letter = letter;
-      newComponent.instance.viewRef = newComponent.hostView;
-      dropZones[i].tile = newComponent.instance;
-
-      this.tiles.push(newComponent.instance);
-    });
-  }
 
   draw() {
     const need = 7 - this.tiles.length;
