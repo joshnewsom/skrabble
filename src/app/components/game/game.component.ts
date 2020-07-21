@@ -99,8 +99,6 @@ export class GameComponent implements OnInit {
     this.socket = io(`/game?g=${this.gameId}`);
 
     this.socket.on('new game state', (game: GameState) => {
-      console.log('new GAME STATE')
-      console.log('game:', game);
       this.game = game;
       this.updateBoardTiles();
 
@@ -115,10 +113,8 @@ export class GameComponent implements OnInit {
     this.socket.on('start game', ( drawForTurnsResult: DrawForTurnsResult, game: GameState ) => {
       console.log('drawForTurnsResult:', drawForTurnsResult);
       this.game = game;
-      console.log('this.game:', this.game);
 
       this.player = this.game.players.find(p => p.user.id === this.user.id);
-      console.log('this.player:', this.player);
       this.playerService.setPlayer(this.player);
       this.player.hand.forEach(letter => {
         this.tileRack.createTile(letter);
@@ -134,9 +130,7 @@ export class GameComponent implements OnInit {
           this.player = this.game.players.find(p => p.user.id === this.user.id);
 
           if (this.player) {
-            console.log('FOUND PLAYER')
             this.playerService.setPlayer(this.player);
-            console.log('this.player:', this.player);
             this.player.hand.forEach(letter => {
               this.tileRack.createTile(letter);
             });
@@ -215,7 +209,6 @@ export class GameComponent implements OnInit {
 
       // draw new letters
       const newLetters = this.draw(lettersPlayed.length);
-      console.log('newLetters:', newLetters);
       player.hand = player.hand.concat(...newLetters);
       newLetters.forEach(letter => {
         this.tileRack.createTile(letter);

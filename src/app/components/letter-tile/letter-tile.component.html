@@ -1,7 +1,7 @@
 <div #tile class="sk-letter-tile" [ngStyle]="style"
   (mousedown)="onMousedown($event)">
 
-  <div class="letter-char">
+  <div class="letter-char" [ngClass]="{'blank-tile': isBlankTile}">
     {{ letter }}
   </div>
 

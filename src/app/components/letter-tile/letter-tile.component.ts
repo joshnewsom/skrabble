@@ -37,6 +37,7 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
   @ViewChild('tile', { static: true }) tile: ElementRef;
 
   public locked = false;
+  public isBlankTile: boolean = false;
   public style: TileStyle = { };
   public square?: SquareComponent;
   public value: number;
@@ -50,6 +51,7 @@ export class LetterTileComponent implements AfterViewInit, OnInit {
     if (this.letter === '_') {
       this.letter = '';
       this.value = 0;
+      this.isBlankTile = true;
     } else {
       this.letter = this.letter.toUpperCase();
       this.value = values[this.letter];

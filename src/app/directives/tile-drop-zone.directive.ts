@@ -39,10 +39,6 @@ export class TileDropZoneDirective implements OnInit {
     this.dragService.onDropTile.subscribe((event: DropEvent) => {
       const { element, letterTile } = event;
 
-      if (this.elementRef.nativeElement === element && this.blocked) {
-        console.log("BLOCKED")
-      }
-
       if (this.elementRef.nativeElement === element && !this.blocked) {
         this.insert(letterTile);
         this.dropTile.emit(letterTile);

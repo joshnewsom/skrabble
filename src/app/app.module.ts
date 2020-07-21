@@ -23,6 +23,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { JoinGameComponent } from './components/join-game/join-game.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { PlayerListComponent } from './components/player-list/player-list.component';
+import { BlankTileDialogComponent } from './components/blank-tile-dialog/blank-tile-dialog.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import { PlayerListComponent } from './components/player-list/player-list.compon
     HomeComponent,
     JoinGameComponent,
     LoginDialogComponent,
-    PlayerListComponent
+    PlayerListComponent,
+    BlankTileDialogComponent
   ],
   imports: [
     AppRoutingModule,
