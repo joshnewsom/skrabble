@@ -1,8 +1,12 @@
 <div class="skrabble-game">
 
+  <sk-join-game *ngIf="game && !game.inProgress" [game]="game"></sk-join-game>
+
   <sk-game-board></sk-game-board>
 
-  <sk-tile-rack [letterSack]="letterSack" style="display: inline-block;"></sk-tile-rack>
+  <sk-player-list *ngIf="game" [game]="game"></sk-player-list>
+
+  <sk-tile-rack style="display: inline-block;"></sk-tile-rack>
 
   <div style="display: inline-block;">
 
@@ -14,10 +18,12 @@
 
   </div>
 
-  <div>
+  <div *ngIf="game">
     <span>Turns Played: {{turns}}</span>
-    <span style="margin-left: 10px">Tiles Remaining: {{letterSack.letters.length}}</span>
+    <span style="margin-left: 10px">Tiles Remaining: {{game?.letterSack.letters.length}}</span>
   </div>
 
 </div>
+
+<ng-container *ngIf='gameNotFound'>game not found</ng-container>
 

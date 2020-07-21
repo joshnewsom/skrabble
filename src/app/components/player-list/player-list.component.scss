@@ -1,0 +1,11 @@
+@import 'src/app/mixins';
+
+.player-list {
+  @include floating-panel;
+
+  margin-right: 10px;
+  margin-top: 10px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}

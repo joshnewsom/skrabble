@@ -1,0 +1,27 @@
+<div class="join-game-panel-container">
+
+  <div class="join-game-panel">
+
+    <div *ngFor="let player of game.players" class="">
+      <span>{{player.user.username}} is here!</span>
+    </div>
+
+    <ng-container *ngIf="!joined">
+
+      <div style="text-align: center;">
+        <button mat-raised-button (click)="joinGame()">Join Game</button>
+      </div>
+
+    </ng-container>
+
+    <ng-container *ngIf="joined">
+      <span>Waiting for other players...</span>
+
+      <div *ngIf="userIsHost" style="text-align: center;">
+        <button mat-raised-button (click)="startGame()">Start Game</button>
+      </div>
+    </ng-container>
+
+  </div>
+
+</div>

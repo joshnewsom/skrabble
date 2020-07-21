@@ -1,0 +1,14 @@
+<div class="player-list">
+
+  <h3>
+    Players:
+  </h3>
+
+  <div *ngFor="let player of game.players">
+    <mat-icon *ngIf="player.isCurrentPlayer" svgIcon="playarrow"></mat-icon>
+    {{player.user.username}}<span *ngIf="game.host.id === player.id">&nbsp;(Host)</span>: {{player.score}}
+
+  </div>
+
+</div>
+

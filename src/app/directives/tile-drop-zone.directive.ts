@@ -1,4 +1,13 @@
-import { Directive, ContentChild, ElementRef, EventEmitter, OnInit, Output, ViewContainerRef } from '@angular/core';
+import {
+  ContentChild,
+  Directive,
+  ElementRef,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewContainerRef
+} from '@angular/core';
 
 import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 
@@ -12,6 +21,8 @@ import { DropEvent } from 'src/app/services/drag/drop-event.interface';
 export class TileDropZoneDirective implements OnInit {
 
   @ContentChild('insertionPoint', { read: ViewContainerRef }) insertionPoint: ViewContainerRef;
+
+  @Input() blocked?: boolean;
 
   @Output() dropTile = new EventEmitter<LetterTileComponent>();
   @Output() pickUpTile = new EventEmitter<LetterTileComponent>();
@@ -28,7 +39,11 @@ export class TileDropZoneDirective implements OnInit {
     this.dragService.onDropTile.subscribe((event: DropEvent) => {
       const { element, letterTile } = event;
 
-      if (this.elementRef.nativeElement === element) {
+      if (this.elementRef.nativeElement === element && this.blocked) {
+        console.log("BLOCKED")
+      }
+
+      if (this.elementRef.nativeElement === element && !this.blocked) {
         this.insert(letterTile);
         this.dropTile.emit(letterTile);
       }
@@ -36,7 +51,7 @@ export class TileDropZoneDirective implements OnInit {
 
     // subscribe to pick up events
     this.dragService.onPickUpTile.subscribe((letterTile: LetterTileComponent) => {
-      if (letterTile === this.tile) {
+      if (letterTile === this.tile && !this.blocked) {
         this.pickUpTile.emit(letterTile);
         this.tile = undefined;
       }

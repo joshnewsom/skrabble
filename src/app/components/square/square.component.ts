@@ -1,4 +1,14 @@
-import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import {
+  Component,
+  ComponentFactoryResolver,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ViewChild
+} from '@angular/core';
+
+import { PlayerService } from 'src/app/services/player/player.service';
 
 import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 
@@ -25,7 +35,12 @@ export class SquareComponent implements OnInit {
   public textContent?: string;
   public tile?: LetterTileComponent;
 
-  constructor() { }
+  private letterTileFactory = this.componentFactoryResolver.resolveComponentFactory(LetterTileComponent);
+
+  constructor(
+    public playerService: PlayerService,
+    private componentFactoryResolver: ComponentFactoryResolver
+  ) { }
 
   ngOnInit(): void {
     if (this.multiplier) {
@@ -52,9 +67,17 @@ export class SquareComponent implements OnInit {
     }
   }
 
+  insertTile(letter: string) {
+    const newComponent = this.dropZone.insertionPoint.createComponent(this.letterTileFactory);
+    newComponent.instance.letter = letter;
+    newComponent.instance.viewRef = newComponent.hostView;
+    this.dropZone.tile = newComponent.instance;
+    this.tile = newComponent.instance;
+    this.tile.locked = true;
+  }
+
   onDropTile(tile: LetterTileComponent) {
     this.tile = tile;
-    // this.onTileAdded.emit(this.tile);
   }
 
   onPickUpTile(tile: LetterTileComponent) {

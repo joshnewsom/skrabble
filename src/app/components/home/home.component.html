@@ -1,0 +1,16 @@
+<h1>Skrabble!</h1>
+
+<div *ngIf="user">
+  Hi {{user.username}}
+</div>
+
+<ng-container *ngIf="games">
+  <div *ngFor="let game of games">
+    game: <a routerLink="/game/{{game.gameId}}">{{game.gameId}}</a>
+    <ul style="margin-top: 0;">
+      <li *ngFor="let player of game.players">{{player.user.username}}</li>
+    </ul>
+  </div>
+</ng-container>
+
+<button (click)="newGame()">New Game</button>

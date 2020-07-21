@@ -9,7 +9,7 @@
     <img src="assets/star.svg" alt="" class="center-star-svg">
   </div>
 
-  <div #interceptor skTileDropZone (dropTile)="onDropTile($event)" (pickUpTile)="onPickUpTile($event)" class="interceptor">
+  <div #interceptor skTileDropZone [blocked]="!playerService.player?.isCurrentPlayer" (dropTile)="onDropTile($event)" (pickUpTile)="onPickUpTile($event)" class="interceptor">
     <ng-template #insertionPoint></ng-template>
   </div>
 

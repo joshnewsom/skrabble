@@ -1,16 +1,19 @@
+import { environment as env } from 'src/environments/environment';
+
 import {
   Component,
   ComponentFactoryResolver,
   Input,
   QueryList,
+  SimpleChanges,
   ViewChildren
 } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 import { LetterTileComponent } from 'src/app/components/letter-tile/letter-tile.component';
 
 import { TileDropZoneDirective } from 'src/app/directives/tile-drop-zone.directive';
 
-import { LetterSack } from 'src/app/classes/letter-sack';
 
 @Component({
   selector: 'sk-tile-rack',
@@ -19,7 +22,7 @@ import { LetterSack } from 'src/app/classes/letter-sack';
 })
 export class TileRackComponent {
 
-  @Input() letterSack: LetterSack;
+  // @Input() letters: string[];
 
   @ViewChildren(TileDropZoneDirective) dropZones: QueryList<TileDropZoneDirective>;
 
@@ -27,25 +30,34 @@ export class TileRackComponent {
   public tiles: LetterTileComponent[] = [ ];
 
   constructor(
-    private componentFactoryResolver: ComponentFactoryResolver
+    private componentFactoryResolver: ComponentFactoryResolver,
+    private http: HttpClient
   ) { }
 
-  draw() {
-    const need = 7 - this.tiles.length;
-    const remaining = this.letterSack.letters.length;
-    const drawNum = need >= remaining ? remaining : need;
-    const newLetters = this.letterSack.draw(drawNum);
-    const emptyZones = this.dropZones.filter(zone => !zone.tile);
+  // ngAfterViewInit() {
+    // this.letters.forEach(letter => this.createTile(letter));
+  // }
 
-    emptyZones.forEach(zone => {
-      const letter = newLetters.pop();
+  // ngOnChanges(changes: SimpleChanges) {
+  //   if (changes.letters && !changes.letters.firstChange) {
+  //     changes.letters.currentValue.forEach((letter: string) => this.createTile(letter));
+  //   }
+  // }
+
+
+  createTile(letter: string) {
+    const zone = this.dropZones.find(zone => !zone.tile);
+    if (zone !== undefined) {
       const newComponent = zone.insertionPoint.createComponent(this.letterTileFactory);
       newComponent.instance.letter = letter;
       newComponent.instance.viewRef = newComponent.hostView;
       zone.tile = newComponent.instance;
       this.tiles.push(newComponent.instance);
-    });
+    } else {
+      console.log('Not enough space on rack!')
+    }
   }
+
 
   onPickUpTile(letterTile: LetterTileComponent) {
     const index = this.tiles.indexOf(letterTile);
@@ -53,6 +65,7 @@ export class TileRackComponent {
       this.tiles.splice(index, 1);
     }
   }
+
 
   onDropTile(letterTile: LetterTileComponent) {
     this.tiles.push(letterTile);
