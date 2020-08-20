@@ -20,7 +20,6 @@ export class GameState {
 }
 
 function buildBlankBoardLayout() {
-  console.log('new layout!')
   let layout = '';
   for (let i = 1; i < 225; i++) {
     layout += ',';

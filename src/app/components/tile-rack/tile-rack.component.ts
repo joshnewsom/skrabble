@@ -1,5 +1,3 @@
-import { environment as env } from 'src/environments/environment';
-
 import {
   Component,
   ComponentFactoryResolver,
@@ -33,16 +31,6 @@ export class TileRackComponent {
     private componentFactoryResolver: ComponentFactoryResolver,
     private http: HttpClient
   ) { }
-
-  // ngAfterViewInit() {
-    // this.letters.forEach(letter => this.createTile(letter));
-  // }
-
-  // ngOnChanges(changes: SimpleChanges) {
-  //   if (changes.letters && !changes.letters.firstChange) {
-  //     changes.letters.currentValue.forEach((letter: string) => this.createTile(letter));
-  //   }
-  // }
 
 
   createTile(letter: string) {

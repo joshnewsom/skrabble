@@ -1,3 +1,12 @@
 .skrabble-game {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  position: relative;
   user-select: none;
+
+  .board-container {
+    overflow: auto;
+  }
 }

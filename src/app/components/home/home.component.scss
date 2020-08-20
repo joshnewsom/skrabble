@@ -1,0 +1,27 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: auto;
+}
+
+.skrabble-title {
+  background-color: red;
+  color: white;
+  font-size: 36px;
+  text-shadow: 2px 2px 2px black;
+  text-align: center;
+  padding: 10px;
+}
+
+.button-area {
+  margin: 25px 0;
+  text-align: center;
+}
+
+.game-list-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  overflow: auto;
+}

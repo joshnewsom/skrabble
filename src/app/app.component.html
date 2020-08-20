@@ -1,9 +1,16 @@
-<div>
+<section class="app-header">
 
-  <a routerLink="/home">Home</a>
+  <button mat-icon-button (click)="goHome()">
+    <mat-icon svgIcon="home"></mat-icon>
+  </button>
 
-  <span style="margin-left: 20px;">{{user.username}}</span>
+  <div class="header-clickable" style="display: flex; align-items: center;">
+    <mat-icon svgIcon="account_circled"></mat-icon>
+    <span>{{user?.username}}</span>
+  </div>
 
-</div>
+</section>
 
-<router-outlet></router-outlet>
+<section class="app-body">
+  <router-outlet></router-outlet>
+</section>

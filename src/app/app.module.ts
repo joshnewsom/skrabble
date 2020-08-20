@@ -24,6 +24,7 @@ import { JoinGameComponent } from './components/join-game/join-game.component';
 import { LoginDialogComponent } from './components/login-dialog/login-dialog.component';
 import { PlayerListComponent } from './components/player-list/player-list.component';
 import { BlankTileDialogComponent } from './components/blank-tile-dialog/blank-tile-dialog.component';
+import { GameListItemComponent } from './components/game-list-item/game-list-item.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { BlankTileDialogComponent } from './components/blank-tile-dialog/blank-t
     JoinGameComponent,
     LoginDialogComponent,
     PlayerListComponent,
-    BlankTileDialogComponent
+    BlankTileDialogComponent,
+    GameListItemComponent
   ],
   imports: [
     AppRoutingModule,

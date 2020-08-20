@@ -38,16 +38,27 @@ export class HomeComponent implements OnInit {
       this.http.get(`${env.apiRoute}/game?uid=${this.user.id}`)
         .subscribe((res: { games: GameState[] }) => {
           this.games = res.games;
+          console.log('this.games:', this.games);
         });
 
     } else {
 
       const loginDialogRef = this.dialog.open(LoginDialogComponent);
-      loginDialogRef.afterClosed().subscribe((username: string) => {
-        const user = new User(username);
-        this.userService.setUser(user);
-        this.user = user;
+      loginDialogRef.afterClosed().subscribe((token: string) => {
+        const payload = token.split('.')[1];
+
+        this.userService.storeToken(token);
+        this.userService.setUserFromToken(token);
+
+        // const user = new User(username);
+        // this.userService.setUser(user);
+        // this.user = user;
       });
+      // loginDialogRef.afterClosed().subscribe((username: string) => {
+      //   const user = new User(username);
+      //   this.userService.setUser(user);
+      //   this.user = user;
+      // });
 
     }
   }

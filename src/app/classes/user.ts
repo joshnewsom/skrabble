@@ -1,10 +1,9 @@
-import { v4 as uuid } from 'uuid';
-
 export class User {
-  public id: string = uuid();
+  public id: string;
   public username: string;
 
-  constructor(username: string) {
-    this.username = username;
+  constructor(tokenData: { username: string, _id: string }) {
+    this.username = tokenData.username;
+    this.id = tokenData._id;
   }
 }

@@ -1,0 +1,13 @@
+<div class="game-list-item" routerLink="/game/{{game.gameId}}">
+
+  <a>{{game.gameId}}</a>
+
+  <sk-player-list [game]="game"></sk-player-list>
+
+  <table class="game-list-item-table">
+    <tr *ngFor="let row of rows">
+      <td *ngFor="let col of row" class="{{col.class}}" [ngClass]="{ tile: col.letter }">{{ col.letter }}</td>
+    </tr>
+  </table>
+
+</div>

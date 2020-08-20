@@ -2,11 +2,13 @@
 
   <sk-join-game *ngIf="game && !game.inProgress" [game]="game"></sk-join-game>
 
-  <sk-game-board></sk-game-board>
-
   <sk-player-list *ngIf="game" [game]="game"></sk-player-list>
 
-  <sk-tile-rack style="display: inline-block;"></sk-tile-rack>
+  <div class="board-container">
+    <sk-game-board></sk-game-board>
+  </div>
+
+  <sk-tile-rack></sk-tile-rack>
 
   <div style="display: inline-block;">
 

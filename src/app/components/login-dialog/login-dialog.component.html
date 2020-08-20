@@ -3,12 +3,27 @@
 <div mat-dialog-content>
 
   <mat-form-field>
-    <mat-label>Choose a name</mat-label>
+    <mat-label>Username</mat-label>
     <input matInput type="text" [(ngModel)]="username">
+  </mat-form-field>
+
+  <br>
+
+  <mat-form-field>
+    <mat-label>Password</mat-label>
+    <input matInput type="password" [(ngModel)]="password">
+  </mat-form-field>
+
+  <br>
+
+  <mat-form-field *ngIf="isNewUser">
+    <mat-label>Confirm Password</mat-label>
+    <input matInput type="password" [(ngModel)]="passwordConfirm">
   </mat-form-field>
 
 </div>
 
 <div mat-dialog-actions align="center">
-  <button mat-raised-button [mat-dialog-close]="username" [disabled]="!username">OK</button>
+  <button *ngIf="!isNewUser" mat-raised-button (click)="isNewUser = true">New User</button>
+  <button mat-raised-button [disabled]="!username || !password" (click)="submit()">OK</button>
 </div>

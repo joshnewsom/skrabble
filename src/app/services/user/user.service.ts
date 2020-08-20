@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 
 import { User } from 'src/app/classes/user';
 
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,11 +11,28 @@ export class UserService {
   public user?: User;
 
   constructor() {
-    this.user = JSON.parse(localStorage.getItem('sk-user'));
+    const token = localStorage.getItem('sk-token');
+    if (token) {
+      this.setUserFromToken(token);
+      console.log('this.user (from storage):', this.user);
+    }
   }
 
-  setUser(user: User) {
+  readUserFromToken(token: string): User {
+    const user: User = new User(JSON.parse(atob(token.split('.')[1])));
+    return user;
+  }
+
+  setUser(user: User): void {
     this.user = user;
-    localStorage.setItem('sk-user', JSON.stringify(user));
+  }
+
+  setUserFromToken(token: string): void {
+    const user = this.readUserFromToken(token);
+    this.setUser(user);
+  }
+
+  storeToken(token: string): void { // JTN maybe not a good idea?  should research alternatives
+    localStorage.setItem('sk-token', token);
   }
 }

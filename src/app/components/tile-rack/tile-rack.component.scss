@@ -2,10 +2,12 @@
 
 .tile-rack {
   border: 4px groove black;
+  bottom: 0;
   display: flex;
   height: $tile-size + 2px;
-  margin-top: 10px;
+  // margin-top: 10px;
   padding: 12px 12px;
+  // position: absolute;
   width: ($tile-size + 2px) * 7;
 
   .rack-letter-slot {

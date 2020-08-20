@@ -1,0 +1,50 @@
+.game-list-item {
+
+  border: 4px solid black;
+  border-radius: 5px;
+  box-shadow: 3px 3px 5px 2px rgba(0, 0, 0, 0.5);
+  display: inline-block;
+  margin: 10px;
+  padding: 10px;
+  position: relative;
+
+  &:hover {
+    cursor: pointer;
+  }
+
+
+  .game-list-item-table {
+    border: 2px solid black;
+    border-collapse: collapse;
+
+    td {
+      background-color: #C2B896;
+      border: 1px solid white;
+      height: 20px;
+      width: 20px;
+      text-align: center;
+
+      &.double-letter {
+        background-color: #AFCCC8;
+      }
+
+      &.triple-letter {
+        background-color: #34829D;
+      }
+
+      &.double-word {
+        background-color: #F0A896;
+      }
+
+      &.triple-word {
+        background-color: #E44C38;
+      }
+
+      &.tile {
+        background-color: #BB7936;
+      }
+
+    }
+  }
+}
+

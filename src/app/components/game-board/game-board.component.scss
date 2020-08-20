@@ -6,10 +6,13 @@
   border: 2px solid black;
   box-sizing: border-box;
   height: $square-size * 15 + 4;
+  max-width: 100vw;
+  overflow: scroll;
   width: $square-size * 15 + 4;
 
   .game-board-row {
     display: flex;
+    max-width: 100vw;
   }
 
 }

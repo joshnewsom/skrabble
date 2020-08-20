@@ -1,16 +1,34 @@
-<h1>Skrabble!</h1>
+<section class="home-container">
 
-<div *ngIf="user">
-  Hi {{user.username}}
-</div>
+  <h1 class="skrabble-title">Skrabble!</h1>
 
-<ng-container *ngIf="games">
+  <div *ngIf="user; else noUser" class="button-area">
+    <button mat-raised-button (click)="newGame()">New Game</button>
+  </div>
+  <ng-template #noUser>
+    <div class="button-area">
+      <button mat-raised-button>Log In</button>
+      <button mat-raised-button>New User</button>
+    </div>
+  </ng-template>
+
+
+  <ng-container *ngIf="games">
+    <div class="game-list-container">
+      <sk-game-list-item *ngFor="let game of games" [game]="game"></sk-game-list-item>
+    </div>
+  </ng-container>
+
+</section>
+
+
+<!-- <div class="">
+
   <div *ngFor="let game of games">
     game: <a routerLink="/game/{{game.gameId}}">{{game.gameId}}</a>
     <ul style="margin-top: 0;">
       <li *ngFor="let player of game.players">{{player.user.username}}</li>
     </ul>
   </div>
-</ng-container>
 
-<button (click)="newGame()">New Game</button>
+</div> -->
